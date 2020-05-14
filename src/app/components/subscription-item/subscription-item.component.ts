@@ -33,7 +33,7 @@ export class SubscriptionItemComponent implements OnInit {
       items: [
         {
           id: this.subscription.items[0].id,
-          quantity: this.quantity,
+          quantity: Number(this.quantity),
         },
       ],
       proration_behavior: 'create_prorations',
@@ -50,7 +50,7 @@ export class SubscriptionItemComponent implements OnInit {
         {
           deleted: true,
           id: this.subscription.items[0].id,
-          quantity: this.subscription.items[0].quantity,
+          quantity: Number = this.subscription.items[0].quantity,
         },
         {
           plan:
@@ -58,7 +58,7 @@ export class SubscriptionItemComponent implements OnInit {
               ? this.yearlyId
               : this.monthlyId,
           deleted: false,
-          quantity:
+          quantity: Number =
             this.quantity === null
               ? this.subscription.items[0].quantity
               : this.quantity,
