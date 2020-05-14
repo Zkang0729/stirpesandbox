@@ -15,6 +15,8 @@ export class SubscriptionItemComponent implements OnInit {
 
   public customerName: string;
   public quantity: number = null;
+  public invoiceNow = false;
+  public proration = false;
 
   constructor(
     private customerService: CustomerService,
@@ -68,6 +70,20 @@ export class SubscriptionItemComponent implements OnInit {
     };
     this.subscriptionService
       .updateSubscription(this.subscription.id, subscriptionUpdateOptions)
+      .subscribe();
+  }
+
+  public toggleInvoiceNow() {
+    this.invoiceNow = !this.invoiceNow;
+  }
+
+  public toggleProration() {
+    this.proration = !this.proration;
+  }
+
+  public onDelete() {
+    this.subscriptionService
+      .deleteSubscription(this.subscription.id, this.invoiceNow, this.proration)
       .subscribe();
   }
 }

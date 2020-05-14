@@ -31,7 +31,7 @@ export class SubscriptionService {
     );
   }
 
-  // update a Subscription
+  // Update a Subscription
   public updateSubscription(
     subscriptionId: string,
     subscriptionUpdateOptions: any
@@ -39,6 +39,18 @@ export class SubscriptionService {
     return this.httpClient.put<any>(
       `${this.subscriptionUrl}/${subscriptionId}`,
       subscriptionUpdateOptions,
+      this.httpOptions
+    );
+  }
+
+  // Delete a Susbcription
+  public deleteSubscription(
+    subscriptionId: string,
+    invoiceNow: boolean,
+    proration: boolean
+  ): Observable<any> {
+    return this.httpClient.delete<any>(
+      `${this.subscriptionUrl}/${subscriptionId}/${invoiceNow}/${proration}`,
       this.httpOptions
     );
   }
