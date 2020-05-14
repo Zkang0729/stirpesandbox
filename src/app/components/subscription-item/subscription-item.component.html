@@ -1,0 +1,21 @@
+<div>
+  <span>{{ customerName }} </span>
+  <span
+    >{{ subscription.items[0].plan.nickname }} Quantity:
+    <input
+      type="number"
+      name="quantity"
+      [value]="quantity === null ? subscription.items[0].quantity : quantity"
+      (change)="setQuantity($event)"
+  /></span>
+  <span
+    ><input
+      type="button"
+      [value]="
+        subscription.items[0].plan.nickname === 'Monthly'
+          ? 'Upgrade to Yearly'
+          : 'Downgrade to Monthly'
+      "
+      (click)="changePlan()"
+  /></span>
+</div>

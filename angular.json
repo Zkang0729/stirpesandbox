@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "stripe-sand-box"
+    }
+  },
+  "defaultProject": "stripe-sand-box",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,0 +1,14 @@
+<form action="/charge" method="post" id="payment-form">
+  <label for="card-element">
+    <h1>Payment Method (Credit or Debit Card Only)</h1>
+  </label>
+  <div class="form-row">
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display form errors. -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+  <input type="submit" value="Submit" class="btn" />
+</form>
