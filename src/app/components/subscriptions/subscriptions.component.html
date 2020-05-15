@@ -1,7 +1,9 @@
-<li *ngFor="let subscription of subscriptions">
-  <app-subscription-item
-    [subscription]="subscription"
-    [monthlyId]="monthlyId"
-    [yearlyId]="yearlyId"
-  ></app-subscription-item>
-</li>
+<ul style="list-style: none;">
+  <li *ngFor="let subscription of subscriptions" style="margin: 0.7rem 0;">
+    <app-subscription-item
+      [subscription]="subscription"
+      [monthlyId]="monthlyId"
+      [yearlyId]="yearlyId"
+    ></app-subscription-item>
+  </li>
+</ul>

@@ -1,0 +1,14 @@
+.cancel {
+  border: 2px solid red;
+  float: right;
+  border-radius: 1rem;
+  padding: 0.1rem;
+  vertical-align: middle;
+}
+
+.cancel input[type="button"] {
+  border-radius: 1rem;
+  background: red;
+  border: none;
+  color: white;
+}

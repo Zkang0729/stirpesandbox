@@ -1,6 +1,9 @@
-<app-subscription-plan-item
-  *ngFor="let plan of plans"
-  [plan]="plan"
-  [customerId]="customerId"
-  [paymentMethodId]="paymentMethodId"
-></app-subscription-plan-item>
+<h1>Subscription Plans</h1>
+<div class="plans">
+  <app-subscription-plan-item
+    *ngFor="let plan of plans"
+    [plan]="plan"
+    [customerId]="customerId"
+    [paymentMethodId]="paymentMethodId"
+  ></app-subscription-plan-item>
+</div>

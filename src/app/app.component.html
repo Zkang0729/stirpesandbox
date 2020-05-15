@@ -1,4 +1,3 @@
-<h1>Customer Information</h1>
 <app-customer-information
   (setCustomerId)="setCustomerId($event)"
 ></app-customer-information>
@@ -6,7 +5,6 @@
   [customerId]="customerId"
   (setPaymentMethodId)="setPaymentMethodId($event)"
 ></app-card-input>
-<h1>Subscription Plans</h1>
 <app-subscription-plans
   [customerId]="customerId"
   [paymentMethodId]="paymentMethodId"

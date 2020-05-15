@@ -1,0 +1,22 @@
+.customer-information {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.customer-information .form-row {
+  margin: 0.5rem;
+  box-sizing: border-box;
+}
+
+.customer-information .form-row input {
+  color: "#32325d";
+  font-family: '"Helvetica Neue", Helvetica, sans-serif';
+  font-size: "16px";
+  width: 100%;
+  padding: 0.3rem;
+  border-radius: 1rem;
+}
+
+.customer-information .form-row input::placeholder {
+  color: "#aab7c4";
+}
