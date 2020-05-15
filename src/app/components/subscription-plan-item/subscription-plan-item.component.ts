@@ -31,6 +31,7 @@ export class SubscriptionPlanItemComponent implements OnInit {
       items: [
         {
           plan: this.plan.id,
+          quantity: Number(this.quantity)
         },
       ],
       defaultPaymentMethod: this.paymentMethodId,

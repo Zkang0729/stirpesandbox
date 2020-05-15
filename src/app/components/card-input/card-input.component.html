@@ -10,5 +10,95 @@
     <!-- Used to display form errors. -->
     <div id="card-errors" role="alert"></div>
   </div>
+  <div class="form-row">
+    <span>Cardholder Name </span
+    ><input
+      type="text"
+      name="cardholder_name"
+      [value]="cardholderName"
+      placeholder="First Name Last Name"
+      (input)="setCardholderName($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>Address Line 1: </span
+    ><input
+      type="text"
+      name="address_line_1"
+      [value]="addressLine1"
+      placeholder="Address Line 1"
+      (input)="setAddressLine1($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>Address Line 2: </span
+    ><input
+      type="text"
+      name="address_line_2"
+      [value]="addressLine2"
+      placeholder="Address Line 2"
+      (input)="setAddressLine2($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>City: </span
+    ><input
+      type="text"
+      name="city"
+      [value]="city"
+      placeholder="City"
+      (input)="setCity($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>State: </span
+    ><input
+      type="text"
+      name="state"
+      [value]="state"
+      placeholder="State"
+      (input)="setState($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>ZIP: </span
+    ><input
+      type="text"
+      name="zip"
+      [value]="zip"
+      placeholder="ZIP/Postal Code"
+      (input)="setZIP($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>Country: </span
+    ><input
+      type="text"
+      name="country"
+      [value]="country"
+      placeholder="Country(2-cahracter)"
+      (input)="setCountry($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>Email: </span
+    ><input
+      type="email"
+      name="email"
+      [value]="email"
+      placeholder="Email"
+      (input)="setEmail($event)"
+    />
+  </div>
+  <div class="form-row">
+    <span>Phone: </span
+    ><input
+      type="tel"
+      name="phone"
+      [value]="phone"
+      placeholder="Phone Number"
+      (input)="setPhone($event)"
+    />
+  </div>
   <input type="submit" value="Submit" class="btn" />
 </form>
