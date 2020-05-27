@@ -6,7 +6,7 @@
       name="firstName"
       [value]="firstName"
       placeholder="Enter Your First Name"
-      (change)="setfirstName($event)"
+      (input)="setFirstName($event)"
     />
   </div>
   <div class="form-row">
@@ -15,7 +15,7 @@
       name="lastName"
       [value]="lastName"
       placeholder="Enter Your Last Name"
-      (change)="setLastName($event)"
+      (input)="setLastName($event)"
     />
   </div>
   <div class="form-row">
@@ -24,7 +24,7 @@
       name="email"
       [value]="email"
       placeholder="Enter Your Email"
-      (change)="setEmail($event)"
+      (input)="setEmail($event)"
     />
   </div>
   <div class="form-row">
@@ -33,7 +33,7 @@
       name="password"
       [value]="password"
       placeholder="Enter Your Password"
-      (change)="setPassword($event)"
+      (input)="setPassword($event)"
     />
   </div>
   <div class="form-row">
@@ -43,8 +43,5 @@
       [value]="password"
       placeholder="Confirm Your Password"
     />
-  </div>
-  <div class="form-row">
-    <input type="button" value="Submit" (click)="onSubmit()" />
   </div>
 </div>

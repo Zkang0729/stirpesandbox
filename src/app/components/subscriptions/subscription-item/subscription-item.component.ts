@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomerService } from '../../services/customer.service';
+import { CustomerService } from '../../../services/customer.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { debounceTime } from 'rxjs/operators';
 
@@ -38,7 +38,7 @@ export class SubscriptionItemComponent implements OnInit {
           quantity: Number(this.quantity),
         },
       ],
-      proration_behavior: 'create_prorations',
+      proration_behavior: 'always_invoice',
     };
     this.subscriptionService
       .updateSubscription(this.subscription.id, subscriptionUpdateOptions)

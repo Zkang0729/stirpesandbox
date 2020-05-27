@@ -1,12 +1,2 @@
-<app-customer-information
-  (setCustomerId)="setCustomerId($event)"
-></app-customer-information>
-<app-card-input
-  [customerId]="customerId"
-  (setPaymentMethodId)="setPaymentMethodId($event)"
-></app-card-input>
-<app-subscription-plans
-  [customerId]="customerId"
-  [paymentMethodId]="paymentMethodId"
-></app-subscription-plans>
+<app-subscription></app-subscription>
 <app-subscriptions></app-subscriptions>

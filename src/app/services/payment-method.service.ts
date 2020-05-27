@@ -28,7 +28,7 @@ export class PaymentMethodService {
     );
   }
 
-  // Attach a Payment MEthod with a customer
+  // Attach a Payment Method with a customer
   public attachPaymentMethodToCustomer(
     paymentMethodId: string,
     paymentMethodAttachOptions: any

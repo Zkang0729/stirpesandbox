@@ -16,91 +16,80 @@
       ><input
         type="text"
         name="cardholder_name"
-        [value]="cardholderName"
+        [ngModel]="cardholderName"
         placeholder="First Name Last Name"
-        (input)="setCardholderName($event)"
-      />
+        (ngModelChange)="setCardholderName($event)"
+        />
     </div>
     <div class="form-row">
       <span>Address Line 1: </span
       ><input
         type="text"
         name="address_line_1"
-        [value]="addressLine1"
+        [ngModel]="addressLine1"
         placeholder="Address Line 1"
-        (input)="setAddressLine1($event)"
-      />
+        (ngModelChange)="setAddressLine1($event)"
+        />
     </div>
     <div class="form-row">
       <span>Address Line 2: </span
       ><input
         type="text"
         name="address_line_2"
-        [value]="addressLine2"
+        [ngModel]="addressLine2"
         placeholder="Address Line 2"
-        (input)="setAddressLine2($event)"
-      />
+        (ngModelChange)="setAddressLine2($event)"
+        />
     </div>
     <div class="form-row">
       <span>City: </span
       ><input
         type="text"
         name="city"
-        [value]="city"
+        [ngModel]="city"
         placeholder="City"
-        (input)="setCity($event)"
-      />
+        (ngModelChange)="setCity($event)"
+        />
     </div>
     <div class="form-row">
       <span>State: </span
       ><input
         type="text"
         name="state"
-        [value]="state"
+        [ngModel]="state"
         placeholder="State"
-        (input)="setState($event)"
-      />
+        (ngModelChange)="setState($event)"
+        />
     </div>
     <div class="form-row">
       <span>ZIP: </span
       ><input
         type="text"
         name="zip"
-        [value]="zip"
+        [ngModel]="zip"
         placeholder="ZIP/Postal Code"
-        (input)="setZIP($event)"
-      />
+        (ngModelChange)="setZip($event)"
+        />
     </div>
     <div class="form-row">
       <span>Country: </span
       ><input
         type="text"
         name="country"
-        [value]="country"
+        [ngModel]="country"
         placeholder="Country(2-cahracter)"
-        (input)="setCountry($event)"
-      />
-    </div>
-    <div class="form-row">
-      <span>Email: </span
-      ><input
-        type="email"
-        name="email"
-        [value]="email"
-        placeholder="Email"
-        (input)="setEmail($event)"
-      />
+        (ngModelChange)="setCountry($event)"
+        />
     </div>
     <div class="form-row">
       <span>Phone: </span
       ><input
         type="tel"
         name="phone"
-        [value]="phone"
+        [ngModel]="phone"
         placeholder="Phone Number"
-        (input)="setPhone($event)"
-      />
+        (ngModelChange)="setPhone($event)"
+        />
     </div>
-    <input type="submit" value="Submit" class="btn" />
   </div>
 </form>

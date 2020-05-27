@@ -1,0 +1,20 @@
+<h1>Subscription Plans</h1>
+<div class="plans">
+  <app-subscription-plan-item
+    *ngFor="let plan of plans"
+    [plan]="plan"
+    [stripe]="stripe"
+    [card]="card"
+    [firstName]="firstName"
+    [lastName]="lastName"
+    [cardholderName]="cardholderName"
+    [addressLine1]="addressLine1"
+    [addressLine2]="addressLine2"
+    [city]="city"
+    [state]="state"
+    [zip]="zip"
+    [country]="country"
+    [email]="email"
+    [phone]="phone"
+  ></app-subscription-plan-item>
+</div>
