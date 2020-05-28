@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomerService } from '../../../services/customer.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { InvoiceService } from 'src/app/services/invoice.service';
 
 @Component({
   selector: 'app-subscription-item',
@@ -20,7 +21,8 @@ export class SubscriptionItemComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    private subscriptionService: SubscriptionService
+    private subscriptionService: SubscriptionService,
+    private invoiceService: InvoiceService
   ) {}
 
   ngOnInit(): void {
@@ -38,16 +40,28 @@ export class SubscriptionItemComponent implements OnInit {
           quantity: Number(this.quantity),
         },
       ],
-      proration_behavior: 'always_invoice',
+      proration_behavior:
+        this.quantity > this.subscription.items[0]
+          ? 'create_proration'
+          : 'none',
     };
     this.subscriptionService
       .updateSubscription(this.subscription.id, subscriptionUpdateOptions)
-      .pipe(debounceTime(1000))
+      .pipe(
+        switchMap(() => {
+          const createInvoiceOptions = {
+            customer: this.subscription.customerId,
+          };
+          return this.invoiceService.addInvoice(createInvoiceOptions);
+        })
+      )
       .subscribe();
   }
 
   public changePlan() {
     const subscriptionUpdateOptions = {
+      cancel_at_period_end:
+        this.subscription.items[0].plan.nickname === 'Monthly' ? false : true,
       items: [
         {
           deleted: true,
@@ -66,7 +80,10 @@ export class SubscriptionItemComponent implements OnInit {
               : this.quantity,
         },
       ],
-      proration_behavior: 'create_prorations',
+      proration_behavior:
+        this.subscription.items[0].plan.nickname === 'Monthly'
+          ? 'create_proration'
+          : 'none',
     };
     this.subscriptionService
       .updateSubscription(this.subscription.id, subscriptionUpdateOptions)
@@ -77,13 +94,9 @@ export class SubscriptionItemComponent implements OnInit {
     this.invoiceNow = !this.invoiceNow;
   }
 
-  public toggleProration() {
-    this.proration = !this.proration;
-  }
-
   public onDelete() {
     this.subscriptionService
-      .deleteSubscription(this.subscription.id, this.invoiceNow, this.proration)
+      .deleteSubscription(this.subscription.id, this.invoiceNow)
       .subscribe();
   }
 }
