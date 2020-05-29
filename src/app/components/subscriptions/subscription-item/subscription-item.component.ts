@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomerService } from '../../../services/customer.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { SubscriptionScheduleService } from 'src/app/services/subscription-schedule.service';
 import { combineLatest } from 'rxjs';
@@ -64,7 +64,7 @@ export class SubscriptionItemComponent implements OnInit {
       .subscribe();
   }
 
-  public changePlan(): void {
+  public async changePlan(): Promise<void> {
     const subscriptionUpdateOptions = {
       cancelAtPeriodEnd: true,
       prorationBehavior: 'none',
@@ -88,23 +88,17 @@ export class SubscriptionItemComponent implements OnInit {
     if (this.subscription.cancelAtPeriodEnd) {
       this.subscriptionService
         .updateSubscription(this.subscription.id, subscriptionReactivateOptions)
-        .pipe(
-          switchMap(() => {
-            return this.subscriptionScheduleService.getSubscriptionSchedulesForACustomer(
-              this.subscription.customerId
-            );
-          }),
-          switchMap((subscriptionSchedules: any[]) => {
-            return combineLatest(
-              subscriptionSchedules.map((subscriptionSchedule) =>
-                this.subscriptionScheduleService.deleteSusbcriptionSchedule(
-                  subscriptionSchedule.id
-                )
-              )
-            );
-          })
-        )
         .subscribe();
+      const subscriptionSchedules = await this.subscriptionScheduleService
+        .getSubscriptionSchedulesForACustomer(this.subscription.customerId)
+        .pipe(first())
+        .toPromise();
+      for (const subscriptionSchedule of subscriptionSchedules) {
+        await this.subscriptionScheduleService
+          .deleteSusbcriptionSchedule(subscriptionSchedule.id)
+          .pipe(first())
+          .toPromise();
+      }
     } else {
       (this.subscription.items[0].plan.nickname === 'Monthly'
         ? this.subscriptionService
