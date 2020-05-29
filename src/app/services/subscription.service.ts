@@ -46,10 +46,11 @@ export class SubscriptionService {
   // Delete a Susbcription
   public deleteSubscription(
     subscriptionId: string,
-    invoiceNow: boolean
+    invoiceNow: boolean,
+    prorate: boolean
   ): Observable<any> {
     return this.httpClient.delete<any>(
-      `${this.subscriptionUrl}/${subscriptionId}/${invoiceNow}`,
+      `${this.subscriptionUrl}/${subscriptionId}/${invoiceNow}/${prorate}`,
       this.httpOptions
     );
   }

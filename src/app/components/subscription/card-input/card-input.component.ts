@@ -16,28 +16,8 @@ export class CardInputComponent implements AfterViewInit {
   @Input() stripe: Stripe;
   @Input() card: StripeCardElement;
 
-  @Input() cardholderName: string = null;
-  @Input() addressLine1: string = null;
-  @Input() addressLine2: string = null;
-  @Input() city: string = null;
-  @Input() state: string = null;
-  @Input() zip: string = null;
-  @Input() country: string = null;
-  @Input() email: string = null;
-  @Input() phone: string = null;
-
   @Output() stripeChange: EventEmitter<Stripe> = new EventEmitter();
   @Output() cardChange: EventEmitter<StripeCardElement> = new EventEmitter();
-
-  @Output() cardholderNameChange: EventEmitter<string> = new EventEmitter();
-  @Output() addressLine1Change: EventEmitter<string> = new EventEmitter();
-  @Output() addressLine2Change: EventEmitter<string> = new EventEmitter();
-  @Output() cityChange: EventEmitter<string> = new EventEmitter();
-  @Output() stateChange: EventEmitter<string> = new EventEmitter();
-  @Output() zipChange: EventEmitter<string> = new EventEmitter();
-  @Output() countryChange: EventEmitter<string> = new EventEmitter();
-  @Output() emailChange: EventEmitter<string> = new EventEmitter();
-  @Output() phoneChange: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 
@@ -87,37 +67,5 @@ export class CardInputComponent implements AfterViewInit {
     });
 
     this.cardChange.emit(this.card);
-  }
-
-  public setCardholderName(cardholderName: any): void {
-    this.cardholderNameChange.emit(cardholderName);
-  }
-
-  public setAddressLine1(addressLine1: any): void {
-    this.addressLine1Change.emit(addressLine1);
-  }
-
-  public setAddressLine2(addressLine2: any): void {
-    this.addressLine2Change.emit(addressLine2);
-  }
-
-  public setCity(city: any): void {
-    this.cityChange.emit(city);
-  }
-
-  public setState(state: any): void {
-    this.stateChange.emit(state);
-  }
-
-  public setZip(zip: any): void {
-    this.zipChange.emit(zip);
-  }
-
-  public setCountry(country: any): void {
-    this.countryChange.emit(country);
-  }
-
-  public setPhone(phone: any): void {
-    this.phoneChange.emit(phone);
   }
 }

@@ -34,7 +34,7 @@ export class PaymentMethodService {
     paymentMethodAttachOptions: any
   ): Observable<any> {
     return this.httpClient.post<any>(
-      `${this.paymentMethodUrl}/${paymentMethodId}`,
+      `${this.paymentMethodUrl}/${paymentMethodId}/attach`,
       paymentMethodAttachOptions,
       this.httpOptions
     );

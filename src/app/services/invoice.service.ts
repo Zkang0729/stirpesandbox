@@ -25,4 +25,13 @@ export class InvoiceService {
       this.httpOptions
     );
   }
+
+  // Charge an Invoice
+  public chargeInvoice(invoiceId: string): Observable<any> {
+    return this.httpClient.post<any>(
+      `${this.invoiceUrl}/${invoiceId}/pay`,
+      null,
+      this.httpOptions
+    );
+  }
 }

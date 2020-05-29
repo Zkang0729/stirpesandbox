@@ -10,19 +10,11 @@ import { StripeCardElement, Stripe } from '@stripe/stripe-js';
 export class SubscriptionPlansComponent implements OnInit {
   @Input() firstName: string = null;
   @Input() lastName: string = null;
+  @Input() email: string = null;
 
   @Input() stripe: Stripe = null;
   @Input() card: StripeCardElement = null;
 
-  @Input() cardholderName: string = null;
-  @Input() addressLine1: string = null;
-  @Input() addressLine2: string = null;
-  @Input() city: string = null;
-  @Input() state: string = null;
-  @Input() zip: string = null;
-  @Input() country: string = null;
-  @Input() email: string = null;
-  @Input() phone: string = null;
   public plans: any[] = null;
 
   constructor(private planService: PlanService) {}

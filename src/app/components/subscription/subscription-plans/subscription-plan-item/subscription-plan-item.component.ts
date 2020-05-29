@@ -15,19 +15,10 @@ export class SubscriptionPlanItemComponent implements OnInit {
 
   @Input() firstName: string = null;
   @Input() lastName: string = null;
+  @Input() email: string = null;
 
   @Input() stripe: Stripe = null;
   @Input() card: StripeCardElement = null;
-
-  @Input() cardholderName: string = null;
-  @Input() addressLine1: string = null;
-  @Input() addressLine2: string = null;
-  @Input() city: string = null;
-  @Input() state: string = null;
-  @Input() zip: string = null;
-  @Input() country: string = null;
-  @Input() email: string = null;
-  @Input() phone: string = null;
 
   public customerId: string = null;
   public paymentMethodId: string = null;
@@ -57,16 +48,7 @@ export class SubscriptionPlanItemComponent implements OnInit {
   }
 
   public async createPaymentMethod(): Promise<void> {
-    const data = {
-      name: this.cardholderName,
-      address_line1: this.addressLine1,
-      address_line2: this.addressLine2 || '',
-      address_city: this.city,
-      address_state: this.state,
-      address_zip: this.zip,
-      address_country: this.country,
-    };
-    const result = await this.stripe.createToken(this.card, data);
+    const result = await this.stripe.createToken(this.card);
 
     if (result.error) {
       // Inform the user if there was an error.
@@ -77,19 +59,6 @@ export class SubscriptionPlanItemComponent implements OnInit {
       const paymentMethodCreateOptions = {
         type: 'card',
         card: { token: result.token.id },
-        billingDetails: {
-          address: {
-            city: this.city,
-            country: this.country,
-            line1: this.addressLine1,
-            line2: this.addressLine2,
-            postalCode: this.zip,
-            state: this.state,
-          },
-          email: this.email,
-          name: this.cardholderName,
-          phone: this.phone,
-        },
       };
       await this.paymentMethodService
         .addPaymentMethodThroughToken(paymentMethodCreateOptions)

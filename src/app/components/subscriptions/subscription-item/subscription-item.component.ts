@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomerService } from '../../../services/customer.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { InvoiceService } from 'src/app/services/invoice.service';
+import { SubscriptionScheduleService } from 'src/app/services/subscription-schedule.service';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-subscription-item',
@@ -22,6 +24,7 @@ export class SubscriptionItemComponent implements OnInit {
   constructor(
     private customerService: CustomerService,
     private subscriptionService: SubscriptionService,
+    private subscriptionScheduleService: SubscriptionScheduleService,
     private invoiceService: InvoiceService
   ) {}
 
@@ -40,7 +43,7 @@ export class SubscriptionItemComponent implements OnInit {
           quantity: Number(this.quantity),
         },
       ],
-      proration_behavior:
+      prorationBehavior:
         this.quantity > this.subscription.items[0]
           ? 'create_proration'
           : 'none',
@@ -53,50 +56,103 @@ export class SubscriptionItemComponent implements OnInit {
             customer: this.subscription.customerId,
           };
           return this.invoiceService.addInvoice(createInvoiceOptions);
+        }),
+        switchMap((invoiceId: string) => {
+          return this.invoiceService.chargeInvoice(invoiceId);
         })
       )
       .subscribe();
   }
 
-  public changePlan() {
+  public changePlan(): void {
     const subscriptionUpdateOptions = {
-      cancel_at_period_end:
-        this.subscription.items[0].plan.nickname === 'Monthly' ? false : true,
+      cancelAtPeriodEnd: true,
+      prorationBehavior: 'none',
+    };
+    const subscriptionCreateOptions = {
+      customer: this.subscription.customerId,
       items: [
         {
-          deleted: true,
-          id: this.subscription.items[0].id,
-          quantity: Number = this.subscription.items[0].quantity,
-        },
-        {
-          plan:
-            this.subscription.items[0].plan.nickname === 'Monthly'
-              ? this.yearlyId
-              : this.monthlyId,
-          deleted: false,
+          plan: this.yearlyId,
           quantity: Number =
             this.quantity === null
               ? this.subscription.items[0].quantity
               : this.quantity,
         },
       ],
-      proration_behavior:
-        this.subscription.items[0].plan.nickname === 'Monthly'
-          ? 'create_proration'
-          : 'none',
+      backdateStartDate: this.subscription.currentPeriodStart,
     };
-    this.subscriptionService
-      .updateSubscription(this.subscription.id, subscriptionUpdateOptions)
-      .subscribe();
+    const subscriptionReactivateOptions = {
+      cancelAtPeriodEnd: false,
+    };
+    if (this.subscription.cancelAtPeriodEnd) {
+      this.subscriptionService
+        .updateSubscription(this.subscription.id, subscriptionReactivateOptions)
+        .pipe(
+          switchMap(() => {
+            return this.subscriptionScheduleService.getSubscriptionSchedulesForACustomer(
+              this.subscription.customerId
+            );
+          }),
+          switchMap((subscriptionSchedules: any[]) => {
+            return combineLatest(
+              subscriptionSchedules.map((subscriptionSchedule) =>
+                this.subscriptionScheduleService.deleteSusbcriptionSchedule(
+                  subscriptionSchedule.id
+                )
+              )
+            );
+          })
+        )
+        .subscribe();
+    } else {
+      (this.subscription.items[0].plan.nickname === 'Monthly'
+        ? this.subscriptionService
+            .deleteSubscription(this.subscription.id, false, true)
+            .pipe(
+              switchMap(() => {
+                return this.subscriptionService.addSubscription(
+                  subscriptionCreateOptions
+                );
+              })
+            )
+        : this.subscriptionService
+            .updateSubscription(this.subscription.id, subscriptionUpdateOptions)
+            .pipe(
+              switchMap(() => {
+                const subscriptionScheduleCreateOptions = {
+                  customer: this.subscription.customerId,
+                  endBehavior: 'release',
+                  phases: [
+                    {
+                      plans: [
+                        {
+                          price: this.monthlyId,
+                          quantity:
+                            this.quantity === null
+                              ? this.subscription.items[0].quantity
+                              : this.quantity,
+                        },
+                      ],
+                    },
+                  ],
+                };
+                return this.subscriptionScheduleService.addSubscriptionSchedule(
+                  subscriptionScheduleCreateOptions
+                );
+              })
+            )
+      ).subscribe();
+    }
   }
 
-  public toggleInvoiceNow() {
+  public toggleInvoiceNow(): void {
     this.invoiceNow = !this.invoiceNow;
   }
 
-  public onDelete() {
+  public onDelete(): void {
     this.subscriptionService
-      .deleteSubscription(this.subscription.id, this.invoiceNow)
+      .deleteSubscription(this.subscription.id, this.invoiceNow, false)
       .subscribe();
   }
 }

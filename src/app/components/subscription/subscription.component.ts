@@ -15,15 +15,6 @@ export class SubscriptionComponent implements OnInit {
   public email: string = null;
   public password: string = null;
 
-  public cardholderName: string = null;
-  public addressLine1: string = null;
-  public addressLine2: string = null;
-  public city: string = null;
-  public state: string = null;
-  public zip: string = null;
-  public country: string = null;
-  public phone: string = null;
-
   constructor() {}
 
   ngOnInit(): void {}

@@ -12,7 +12,8 @@
     ><input
       type="button"
       [value]="
-        subscription.items[0].plan.nickname === 'Monthly'
+        subscription.items[0].plan.nickname === 'Monthly' ||
+        subscription.cancelAtPeriodEnd
           ? 'Upgrade to Yearly'
           : 'Downgrade to Monthly'
       "
